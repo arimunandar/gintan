@@ -60,7 +60,11 @@ class Transaction {
     }
 
     function getTotalTransaction($form, $to) {
-        $sql = "SELECT * FROM `transactions` WHERE status='Transaksi Selesai' AND (transaction_date BETWEEN '$form' AND '$to')";
+        $datef = date_create("$form");
+        $datet = date_create("$to");
+        $nfrom = date_format($datef,"d-m-Y");
+        $nto = date_format($datet,"d-m-Y");
+        $sql = "SELECT * FROM `transactions` WHERE status='Transaksi Selesai' AND (transaction_date BETWEEN '$nfrom' AND '$nto')";
         $result = mysqli_query($this->db->conn, $sql);
         if (mysqli_num_rows($result) > 0) {
             // output data of each row
@@ -74,8 +78,27 @@ class Transaction {
         }
     }
 
-    function getTotalPendapatan() {
-        $sql = "SELECT * FROM transactions WHERE status='Transaksi Selesai'";
+    function getTotalAllTransaction() {
+        $sql = "SELECT * FROM `transactions` WHERE status='Transaksi Selesai'";
+        $result = mysqli_query($this->db->conn, $sql);
+        if (mysqli_num_rows($result) > 0) {
+            // output data of each row
+            $data = array();
+            while($row = mysqli_fetch_assoc($result)) {
+                array_push($data, $row);
+            }
+            return $data;
+        } else {
+            return [];
+        }
+    }
+
+    function getTotalPendapatan($form, $to) {
+        $datef = date_create("$form");
+        $datet = date_create("$to");
+        $nfrom = date_format($datef,"d-m-Y");
+        $nto = date_format($datet,"d-m-Y");
+        $sql = "SELECT * FROM `transactions` WHERE status='Transaksi Selesai' AND (transaction_date BETWEEN '$nfrom' AND '$nto')";
         $result = mysqli_query($this->db->conn, $sql);
         if (mysqli_num_rows($result) > 0) {
             // output data of each row
