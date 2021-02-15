@@ -56,7 +56,10 @@ class Product {
         $sql = "DELETE FROM products WHERE id=$id";
         $result = mysqli_query($this->db->conn, $sql);
         if (mysqli_query($this->db->conn, $sql)) {
-            header('Location: product.php');
+            echo "<div class='alert alert-success alert-dismissible'>
+                <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                <strong>Success!</strong> Berhasil hapus data.
+            </div>";
         } else {
             echo "Error deleting record: " . mysqli_error($this->db->conn);
         }
@@ -78,7 +81,10 @@ class Product {
     
             $sql = "UPDATE products SET name='$name',price='$price',image='$link',size='$size',description='$description',color='$color' WHERE id=$id";
             if (mysqli_query($this->db->conn, $sql)) {
-                header('Location: product.php');
+                echo "<div class='alert alert-success alert-dismissible'>
+                <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                <strong>Success!</strong> Berhasil update data.
+            </div>";
             } else {
                 echo "Error updating record: " . mysqli_error($this->db->conn);
             }
@@ -101,7 +107,10 @@ class Product {
         $sql = "INSERT INTO `products`(`name`, `price`, `image`, `size`, `color`, `description`) VALUES ('$name','$price','$link','$size','$color','$description')";
 
         if (mysqli_query($this->db->conn, $sql)) {
-            header('Location: ../index.php');
+            echo "<div class='alert alert-success alert-dismissible'>
+                <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                <strong>Success!</strong> Berhasil tambah data.
+            </div>";
         } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($this->db->conn);
         }
